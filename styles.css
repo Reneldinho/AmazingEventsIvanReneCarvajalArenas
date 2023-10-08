@@ -69,3 +69,27 @@ body{
 .ImagenCarrusel{
     height: 25rem;
 }
+
+fieldset {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 15rem;
+    width: 70%;
+    height: 90%;
+    background-color: yellowgreen;
+} 
+
+.check_env {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.check {
+    width: 80%;
+}
+
+.enviar {
+    width: 20%;
+}

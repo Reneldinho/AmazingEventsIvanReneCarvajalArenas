@@ -70,6 +70,13 @@ body{
     height: 25rem;
 }
 
+.ImgDetails{
+    margin-top: 2rem;
+
+    height: 20rem;
+    width: auto;
+}
+
 fieldset {
     display: flex;
     justify-content: center;

@@ -104,3 +104,17 @@ fieldset {
 .ImagenCards{
     height: 15rem;
 }
+
+
+table,td {
+	border: 3px solid black;
+    text-align: center;
+}
+
+.ColorEncabezadoTabla{
+    background-color: yellow;
+}
+
+td{
+    background-color: beige;
+}

@@ -6,9 +6,7 @@
 
 
 const ArrayEvents = data.events
-const ContenedorCheckBox = document.getElementById("ContenedorCheckBox")
 const contenedor = document.getElementById("ContenedorCards")
-let Countrys = []
 
 {/* <div class="card" style="width: 18rem;">
 <img class="card-img-top" src="./Recursos_Amazing_Events_Task_1/books.jpg" alt="Card image cap">

@@ -6,6 +6,30 @@
 
 const ArrayEvents = data.events
 const contenedor = document.getElementById("ContenedorCards")
+const ContenedorCheckbox = document.getElementById("ContenedorCheckbox")
+let Categorys = []
+Categorys = Array.from(new Set(ArrayEvents.map(event => event.category)))
+console.log(Categorys);
+
+
+function PintarCheckbox(ArrayCategorys) {
+  ArrayCategorys.forEach(Category => {
+    const checkbox = document.createElement("div")
+    checkbox.classList.add("form-check", "form-switch")
+    checkbox.innerHTML = `
+    <div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+<label class="form-check-label" for="flexSwitchCheckDefault">${Category}</label>
+</div>
+    `
+    ContenedorCheckbox.appendChild(checkbox)
+  });
+}
+
+PintarCheckbox(Categorys)
+
+
+
 
 for (let event of ArrayEvents) {
     if(event.date < "2023-01-22"){

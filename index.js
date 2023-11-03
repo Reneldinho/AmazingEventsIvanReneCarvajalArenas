@@ -22,7 +22,7 @@ function PintarCheckbox(ArrayCategorys) {
     checkbox.innerHTML = `
     <div class="form-check form-switch">
 <input class="form-check-input" type="checkbox" id=${Category} value=${Category}">
-<label class="form-check-label" for=${Category}=>${Category.replace("-", "")}</label>
+<label class="form-check-label" for=${Category}=>${Category}</label>
 </div>
     `
     ContenedorCheckbox.appendChild(checkbox)
@@ -34,7 +34,7 @@ PintarCheckbox(Categorys)
 //AQUI VAMOS CON LOS FILTROS: TRAEMOS DE TODOS LOS INPUT TIPO CHECKBOX QUE ESTAN CHEQUEADOS
 //LUEGO EN let checked, LE ANTEPONGO A document, UN Array.from(), PARA LUEGO AL FINAL PODER HACER UNA FUNCION DE ORDEN SUPERIOR .map((checkbox => checkbox.value)), Y ASI PODER CREAR UN NUEVO ARRAY CON LOS CHEQUEADOS
 
-ContenedorCheckbox.addEventListener('change', () => FiltrarCategorys(ArrayEvents))
+// ContenedorCheckbox.addEventListener('change', () => FiltrarCategorys(ArrayEvents))
 
 function FiltrarCategorys(ArrayCategorias) {
   let checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map((checkbox => checkbox.value))
@@ -98,11 +98,15 @@ function crearCard(ArrayEvents) {
 
 crearCard(ArrayEvents)
 
+function FiltrarPorTexto(events) {
+  return events.filter(events=>events.name.toLowerCase().includes(search.value.toLowerCase()))
+}
+
 //ESCUCHADOR DE EVENTOS
 
 
-function SuperFiltro(ArrayEvents) {
-  let filtro1 = FiltrarCategorys(ArrayEvents)
+function SuperFiltro(eventos) {
+  let filtro1 = FiltrarCategorys(eventos)
   let filtro2 = FiltrarPorTexto(filtro1)
   crearCard(filtro2)
 }

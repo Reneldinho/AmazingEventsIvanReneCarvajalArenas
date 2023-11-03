@@ -7,19 +7,22 @@
 const ArrayEvents = data.events
 const contenedor = document.getElementById("ContenedorCards")
 const ContenedorCheckbox = document.getElementById("ContenedorCheckbox")
+const buscador = document.getElementById("buscador")
 let Categorys = []
-Categorys = Array.from(new Set(ArrayEvents.map(event => event.category)))
+
+//PARA QUE ME FUNCIONE EL FILTRO VOY A ANEXAR UN .replace(" ", "-") DESPUES DE event.category
+Categorys = Array.from(new Set(ArrayEvents.map(event => event.category.replace(" ", "-"))))
 console.log(Categorys);
 
-
+// PARA QUE ME QUEDE MAS BONITO EL FILTRO: EN EL ${Category} LE AGREGO UN .replace("-", "")
 function PintarCheckbox(ArrayCategorys) {
   ArrayCategorys.forEach(Category => {
     const checkbox = document.createElement("div")
     checkbox.classList.add("form-check", "form-switch")
     checkbox.innerHTML = `
     <div class="form-check form-switch">
-<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-<label class="form-check-label" for="flexSwitchCheckDefault">${Category}</label>
+<input class="form-check-input" type="checkbox" id=${Category} value=${Category}">
+<label class="form-check-label" for=${Category}=>${Category.replace("-", "")}</label>
 </div>
     `
     ContenedorCheckbox.appendChild(checkbox)
@@ -28,31 +31,58 @@ function PintarCheckbox(ArrayCategorys) {
 
 PintarCheckbox(Categorys)
 
-{/* <div class="card" style="width: 18rem;">
-<img class="card-img-top" src="./Recursos_Amazing_Events_Task_1/books.jpg" alt="Card image cap">
-<div class="card-body">
-  <h5 class="card-title">LIBRARY</h5>
-  <p class="card-text">CAPACITY: THOUSAND PEOPLE <br>DATE: 10/12/2023 <br>PRICE = $25</p>
-  <a href="#" class="btn btn-primary">DETAILS</a>
-</div>
-</div> */}
+//AQUI VAMOS CON LOS FILTROS: TRAEMOS DE TODOS LOS INPUT TIPO CHECKBOX QUE ESTAN CHEQUEADOS
+//LUEGO EN let checked, LE ANTEPONGO A document, UN Array.from(), PARA LUEGO AL FINAL PODER HACER UNA FUNCION DE ORDEN SUPERIOR .map((checkbox => checkbox.value)), Y ASI PODER CREAR UN NUEVO ARRAY CON LOS CHEQUEADOS
 
-// let Telefono = 3162658967 y donde esta <p> pondria: <p class="card-text">CAPACITY: THOUSAND PEOPLE <br>DATE: 10/12/2023 <br>PRICE = $25 <br>Phone: ${Telefono}</p>. DE ESTA FORMA EM TOMARIA LA VARIABLE CREADA COMO TELEFONO
+ContenedorCheckbox.addEventListener('change', () => FiltrarCategorys(ArrayEvents))
 
-{/* <div class="form-check form-switch">
-<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-<label class="form-check-label" for="flexSwitchCheckDefault">Category</label>
-</div> */}
+function FiltrarCategorys(ArrayCategorias) {
+  let checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map((checkbox => checkbox.value))
+  console.log(checked)
+  let EventsFiltrados = []
+
+  ArrayCategorias.forEach(EventoSeleccionado => {
+    checked.forEach(EventoCategoria => {
+      if (EventoCategoria == EventoSeleccionado.category.replace("-", "")) {
+        EventsFiltrados.push(EventoSeleccionado)
+      }
+    })
+  })
+  if (EventsFiltrados.length == 0) {
+    EventsFiltrados.push(ArrayCategorias)
+  }
+  return EventsFiltrados
+}
 
 
 
+// for (let event of ArrayEvents) {
+//   const card = document.createElement("div")
+//   card.classList.add("card")
+//   card.style.width = "18rem"
+//   card.innerHTML = `<div class="card" style="width: 18rem;">
+//   <img class="card-img-top ImagenCards" src="${event.image}" alt="Card image cap">
+//   <div class="card-body">
+//     <h5 class="card-title">${event.name}</h5>
+//     <p class="card-text">DATE: ${event.date} <br>DESCRIPTION: ${event.description} <br>CATEGORY: ${event.category} <br>PLACE: ${event.place}<br>CAPACITY: ${event.capacity} <br>ASSISTANCE: ${event.assistance}<br>PRICE: ${event.price}</p>
+
+//     <a href="#" class="btn btn-primary">DETAILS</a>
+//   </div>
+//   </div>`
+//   contenedor.appendChild(card)
+// }
 
 
-for (let event of ArrayEvents) {
-  const card = document.createElement("div")
-  card.classList.add("card")
-  card.style.width = "18rem"
-  card.innerHTML = `<div class="card" style="width: 18rem;">
+function crearCard(ArrayEvents) {
+  if (ArrayEvents.length == 0) {
+    contenedor.innerHTML = "<h2>PERSONA NO ENCONTRADA</h2>"
+  } else {
+    contenedor.innerHTML = "";
+    for (let event of ArrayEvents) {
+      const card = document.createElement("div")
+      card.classList.add("card")
+      card.style.width = "18rem"
+      card.innerHTML = `<div class="card" style="width: 18rem;">
   <img class="card-img-top ImagenCards" src="${event.image}" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">${event.name}</h5>
@@ -61,15 +91,26 @@ for (let event of ArrayEvents) {
     <a href="#" class="btn btn-primary">DETAILS</a>
   </div>
   </div>`
-  contenedor.appendChild(card)
+      contenedor.appendChild(card)
+    }
+  }
 }
 
+crearCard(ArrayEvents)
 
-// contenedor.appendChild(card)
-// for (let event of ArrayEvents) {
-//     console.table(`DATE ES: ${event.date}`)
-// }
+//ESCUCHADOR DE EVENTOS
 
-// let titulo = document.createElement("h1")
-// titulo.innerHTML = "ESTE ES NUESTRO TITULO"
-// contenedor.appendChild(titulo)
+
+function SuperFiltro(ArrayEvents) {
+  let filtro1 = FiltrarCategorys(ArrayEvents)
+  let filtro2 = FiltrarPorTexto(filtro1)
+  crearCard(filtro2)
+}
+
+ContenedorCheckbox.addEventListener('change',()=>{
+SuperFiltro(ArrayEvents)
+})
+
+buscador.addEventListener("keyup", ()=>{
+SuperFiltro(ArrayEvents)
+})

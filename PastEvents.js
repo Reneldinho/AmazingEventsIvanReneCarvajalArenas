@@ -29,6 +29,29 @@ function PintarCheckbox(ArrayCategorys) {
 PintarCheckbox(Categorys)
 
 
+//FILTRADO
+ContenedorCheckbox.addEventListener('change', () => FiltrarCategorys(ArrayEvents))
+
+function FiltrarCategorys(ArrayCategorias) {
+  let checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map((checkbox => checkbox.value))
+  console.log(checked)
+  let EventsFiltrados = []
+
+  ArrayCategorias.forEach(EventoSeleccionado => {
+    checked.forEach(EventoCategoria => {
+      if (EventoCategoria == EventoSeleccionado.category.replace("-", "")) {
+        EventsFiltrados.push(EventoSeleccionado)
+      }
+    })
+  })
+  if (EventsFiltrados.length == 0) {
+    EventsFiltrados.push(ArrayCategorias)
+  }
+  return EventsFiltrados
+}
+
+//------------------------------------------------------------------------------------------------
+
 
 
 for (let event of ArrayEvents) {

@@ -68,12 +68,6 @@ export function crearCard(arrayEvent) {
 
 
 // ESCUCHAR EVENTO DE SELECCIONAR CHECKBOX:
-contenedorCheckbox.addEventListener('change', () => filtrarCategorias(arrayEvent))
-contenedorCheckbox.addEventListener('change', function () {
-    let filtro = filtrarCategorias(arrayEvent)
-    crearCard(filtro)
-})
-
 
 export function superFiltro(arrayEvent) {
     let filtro1 = filtrarCategorias(arrayEvent)

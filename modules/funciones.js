@@ -10,7 +10,9 @@ export let urlApi = "https://mindhub-xj03.onrender.com/api/amazing";
 const contenedor = document.getElementById("ContenedorCards")
 const contenedorCheckbox = document.getElementById("ContenedorCheckbox")
 const buscador = document.getElementById("buscador")
-
+const tabla1 = document.getElementById("tabla1")
+const tabla2 = document.getElementById("tabla2")
+const tabla3 = document.getElementById("tabla3")
 
 //PINTAR CHECKBOX:
 export function pintarChecks(arrayCategorys) {
@@ -36,8 +38,10 @@ export function filtrarCategorias(arrayEvent) {
     if (eventosFiltrados.length === 0) { return arrayEvent; } return eventosFiltrados;
 }
 
-function filtrarPorTexto(events) {
-    return events.filter(event => event.name.toLowerCase().includes(buscador.value.toLowerCase()))
+export function filtrarPorTexto(arrayEvent) {
+    return arrayEvent.filter((event) =>
+        event.name.toLowerCase().includes(buscador.value.toLowerCase())
+    );
 }
 
 // CREAR CARDS
@@ -70,9 +74,9 @@ export function crearCard(arrayEvent) {
 // ESCUCHAR EVENTO DE SELECCIONAR CHECKBOX:
 
 export function superFiltro(arrayEvent) {
-    let filtro1 = filtrarCategorias(arrayEvent)
-    let filtro2 = filtrarPorTexto(filtro1)
-    
+    let filtro1 = filtrarPorTexto(arrayEvent)
+    let filtro2 = filtrarCategorias(filtro1)
+
     //ESCUCHADOR DE EVENTOS
     contenedorCheckbox.addEventListener('change', () => {
         superFiltro(arrayEvent)
@@ -84,3 +88,39 @@ export function superFiltro(arrayEvent) {
     crearCard(filtro2)
 }
 
+export function crearTablas(arrayEvent, data) {
+    const estadisticaEventos = arrayEvent.filter(evento => Date.parse(data.currentDate) > Date.parse(evento.date))
+    //TABLA1
+    let arrayClasificado = estadisticaEventos.sort((a, b) => b.assistance / b.capacity - a.assistance / a.capacity)
+    let eventoMayorAsistencia = arrayClasificado[0]
+    let eventoMenorAsistencia = arrayClasificado[arrayClasificado.length - 1]
+    let arrayCapacidad = arrayClasificado.sort((a, b) => b.capacity - a.capacity)
+    let eventoMayorCapacidad = arrayCapacidad[0]
+    let tr = document.createElement("tr")
+    tr.innerHTML = `      <td>${eventoMayorAsistencia.name}</td>
+<td>${eventoMenorAsistencia.name}</td>
+<td>${eventoMayorCapacidad.name}</td>
+`
+    tabla1.appendChild(tr)
+    //TABLA2
+    const eventosFuturos = []
+    for (let evento of arrayEvent) {
+        if (Date.parse(evento.date) > Date.parse(data.currentDate)) {
+            eventosFuturos.push(evento)
+        }
+    }
+
+    const categoriasEventosFuturos = eventosFuturos.map(evento => evento.category)
+    const arrayCategoriasEventosFuturos = categoriasEventosFuturos.filter((valor, index) => categoriasEventosFuturos.indexOf(valor) == index)
+
+    arrayCategoriasEventosFuturos.forEach(category => {
+        let eventosFiltrados = arrayCategoriasEventosFuturos.filter(evento => evento.category == category)
+        let gananciasEventosFuturos = eventosFiltrados.map(evento => evento.stimate * evento.price).reduce((a, b) => a + b, 0)
+        let porcentajeEventosFuturos = eventosFiltrados.map(evento => evento.stimate/evento.capacity*100).reduce((a,b) => a + b, 0)/eventosFiltrados.length
+        let tr = document.createElement("tr")
+        tr.innerHTML = `      <td>${category}</td>
+    <td>${gananciasEventosFuturos}</td>
+    <td>${porcentajeEventosFuturos}</td>
+    `
+    });
+}

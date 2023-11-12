@@ -13,7 +13,7 @@
 
 <body>
     <header>
-        <img class="Home_Logo" src="./Recursos_Amazing_Events_Task_1/amazing_brand.png" alt="">
+        <img class="Home_Logo" src="../Recursos_Amazing_Events_Task_1/amazing_brand.png" alt="">
         <nav>
             <a class="btn btn-primary" href="../index.html">HOME</a>
             <a class="btn btn-primary" href="./UpcomingEvents.html">UPCOMINGEVENTS</a>
@@ -23,80 +23,53 @@
         </nav>
     </header>
     <main>
-        <div class="d-flex flex-column p-5">
-            <table>
-                <tr>
-                    <th class="ColorEncabezadoTabla" colspan="3"><h4>EVENTS STATISTICS</h4></th>
+        <div id="stats" class="container d-flex flex-column justify-content-center align-items-center gap-3 py-4 px-2">
+            <table class="table caption-top table-bordered border-success">
+              <caption class="text-dark text-center fw-bold fs-3">
+                Events Statistics
+              </caption>
+              <thead>
+                <tr class="fs-5 text-center">
+                  <th>Events with highest percentage of assistance</th>
+                  <th>Events with lowest percentage of assistance</th>
+                  <th>Events with large capacity</th>
                 </tr>
+              </thead>
+              <tbody id="tabla1">
 
-                <tr>
-                    <td>EVENTS WITH HIGHEST % OF ASSISTANCE</td>
-                    <td>EVENTS WITH LOWEST % OF ASSISTANCE</td>
-                    <td>EVENTS WITH LARGUER CAPACITY</td>
-                </tr>
-
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
+              </tbody>
             </table>
-
-            <table>
-                <tr>
-                    <th class="ColorEncabezadoTabla" colspan="3"><h4>UPCOMING EVENTS STATISTICS BY CATEGORY</h4></th>
+            <table class="table caption-top table-bordered border-success">
+              <caption class="text-dark text-center fw-bold fs-3">
+                Upcoming events statistics by category
+              </caption>
+              <thead>
+                <tr class="fs-5 text-center">
+                  <th>Categories</th>
+                  <th>Revenues</th>
+                  <th>Percentage of assistance</th>
                 </tr>
-
-                <tr>
-                    <td>CATEGORIES</td>
-                    <td>REVENUES</td>
-                    <td>PERCENTAJE OF ASSITANCE</td>
-                </tr>
-
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
+              </thead>
+              <tbody id="tabla2">
+      
+              </tbody>
             </table>
-
-            <table>
-                <tr>
-                    <th class="ColorEncabezadoTabla" colspan="3"><h4>PAST EVENTS STATISTICS BY CATEGORY</h4></th>
+            <table class="table caption-top table-bordered border-success">
+              <caption class="text-dark fw-bold text-center fs-3">
+                Past events statistics by category
+              </caption>
+              <thead>
+                <tr class="fs-5 text-center">
+                  <th>Categories</th>
+                  <th>Revenues</th>
+                  <th>Percentage of assistance</th>
                 </tr>
-
-                <tr>
-                    <td>CATEGORIES</td>
-                    <td>REVENUES</td>
-                    <td>PERCENTAJE OF ASSITANCE</td>
-                </tr>
-
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
+              </thead>
+              <tbody id="tabla3">
+                
+              </tbody>
             </table>
-
-
-        </div>
+          </div>
     </main>
     <footer>
         <div class="d-flex justify-content-around align-content-between">
@@ -107,6 +80,7 @@
         </div>
 
     </footer>
+    <script type="module" src="../js/stats.js"></script>
 </body>
 
 </html>

@@ -88,6 +88,8 @@ export function superFiltro(arrayEvent) {
     crearCard(filtro2)
 }
 
+
+//TRABAJANDO LAS TABLAS
 export function crearTablas(arrayEvent, data) {
     const estadisticaEventos = arrayEvent.filter(evento => Date.parse(data.currentDate) > Date.parse(evento.date))
     //TABLA1
@@ -102,6 +104,7 @@ export function crearTablas(arrayEvent, data) {
 <td>${eventoMayorCapacidad.name}</td>
 `
     tabla1.appendChild(tr)
+
     //TABLA2
     const eventosFuturos = []
     for (let evento of arrayEvent) {

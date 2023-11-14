@@ -18,4 +18,5 @@ fetch(urlApi)
     filtrarCategorias(pastEvents)
     crearCard(pastEvents, currentDate)
     superFiltro(arrayEvents)
-  })
+  });
+

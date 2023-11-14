@@ -116,7 +116,7 @@ export function crearTablas(arrayEvent, data) {
     arrayCategoriasEventosFuturos.forEach(category => {
         let eventosFiltrados = arrayCategoriasEventosFuturos.filter(evento => evento.category == category)
         let gananciasEventosFuturos = eventosFiltrados.map(evento => evento.stimate * evento.price).reduce((a, b) => a + b, 0)
-        let porcentajeEventosFuturos = eventosFiltrados.map(evento => evento.stimate/evento.capacity*100).reduce((a,b) => a + b, 0)/eventosFiltrados.length
+        let porcentajeEventosFuturos = eventosFiltrados.map(evento => evento.stimate / evento.capacity * 100).reduce((a, b) => a + b, 0) / eventosFiltrados.length
         let tr = document.createElement("tr")
         tr.innerHTML = `      <td>${category}</td>
     <td>${gananciasEventosFuturos}</td>

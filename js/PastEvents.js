@@ -17,6 +17,6 @@ fetch(urlApi)
     pintarChecks(pastEvents)
     filtrarCategorias(pastEvents)
     crearCard(pastEvents, currentDate)
-    superFiltro(arrayEvents)
+    superFiltro(pastEvents)
   });
 

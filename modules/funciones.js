@@ -107,50 +107,73 @@ export function crearTablas(arrayEvent, data) {
 
 
     //TABLA2
-    const eventosFuturos = []
-    for (let evento of arrayEvent) {
-        if (Date.parse(evento.date) > Date.parse(data.currentDate)) {
-            eventosFuturos.push(evento)
-        }
+    const arrayEventosFuturos = [];
+
+    for (let event of arrayEvent) {
+      if (Date.parse(event.date) > Date.parse(data.currentDate)) {
+        arrayEventosFuturos.push(event);
+      }
     }
-
-    const categoriasEventosFuturos = eventosFuturos.map(evento => evento.category)
-    const arrayCategoriasEventosFuturos = categoriasEventosFuturos.filter((valor, index) => categoriasEventosFuturos.indexOf(valor) == index)
-
-    arrayCategoriasEventosFuturos.forEach(category => {
-        let eventosFiltrados = arrayCategoriasEventosFuturos.filter(evento => evento.category == category);
-        let gananciasEventosFuturos = eventosFiltrados.map(evento => evento.stimate * evento.price).reduce((a, b) => a + b, 0)
-        let porcentajeEventosFuturos = eventosFiltrados.map(evento => evento.stimate / evento.capacity * 100).reduce((a, b) => a + b, 0) / eventosFiltrados.length
-        let tr2 = document.createElement("tr")
-        tr.innerHTML = `
-        <td>${category}</td>
-        <td>${gananciasEventosFuturos}</td>
-        <td>${porcentajeEventosFuturos}</td>
-    `
-        tabla2.appendChild(tr2);
+  
+    const categoriasEventosFuturos = arrayEventosFuturos.map((event) => event.category);
+  
+    const arrayCategoriasEventosFuturos = categoriasEventosFuturos.filter(
+      (value, index) => categoriasEventosFuturos.indexOf(value) === index
+    );
+  
+    arrayCategoriasEventosFuturos.forEach((category) => {
+      let eventosFiltrados = arrayEventosFuturos.filter(
+        (event) => event.category === category
+      );
+  
+      let gananciasEventosFuturos = eventosFiltrados
+        .map((event) => event.estimate * event.price)
+        .reduce((a, b) => a + b, 0);
+  
+      let porcentajeEventosFuturos =
+        eventosFiltrados
+          .map((event) => (event.estimate / event.capacity) * 100)
+          .reduce((a, b) => a + b, 0) / eventosFiltrados.length;
+  
+      let tr = document.createElement("tr");
+      tr.innerHTML = `
+          <td>${category}</td>
+          <td>$ ${gananciasEventosFuturos.toLocaleString(undefined, {
+            maximumFractionDigits: 0,
+          })}</td>
+          <td>${porcentajeEventosFuturos.toFixed(2)}%</td>
+          `;
+      tabla2.appendChild(tr);
     });
 
 
-    //TABLA 3
-    const categoriasPasadas = eventosPasados.map(evento => evento.category);
+
+//     //TABLA 3
+const arrayEventosPasados = [];
+
+for (let event of arrayEvent) {
+  if (Date.parse(event.date) < Date.parse(data.currentDate)) {
+    arrayEventosPasados.push(event);
+  }
+}
+console.log(arrayEventosPasados);
+    const categoriasPasadas = arrayEventosPasados.map(evento => evento.category);
     const arrayCategoriasPasadas = categoriasPasadas.filter((valor, indice) => categoriasPasadas.indexOf(valor) === indice);
 
 
     arrayCategoriasPasadas.forEach(category => {
-        let filtradorEventos = events.filter(evento => evento.category == category);
+        let filtradorEventos = arrayEventosPasados.filter(evento => evento.category == category);
         let Ganancias = filtradorEventos.map(evento => evento.assistance * evento.price).reduce((a, b) => a + b, 0)
         console.log(Ganancias);
-        let porcentajes = 0;
-        if (filtradorEventos.length > 0) {
-            porcentajes = filtradorEventos.map(evento => (evento.assistance / evento.capacity) * 100).reduce((a, b) => a + b, 0 / filtradorEventos.length)
-        }
+           let porcentajes = filtradorEventos.map(evento => (evento.assistance / evento.capacity) * 100).reduce((a, b) => a + b, 0) / filtradorEventos.length
+        
 
-        let tr3 = document.createElement("tr");
-        tr3.className = "table-primary", "align-items-center";
-        tr3.innerHTML = `<td>${category}</td>
+        let tr = document.createElement("tr");
+        tr.className = "table-primary", "align-items-center";
+        tr.innerHTML = `<td>${category}</td>
                       <td>$${Ganancias}</td>
                       <td>${porcentajes.toFixed(2)}%</td>`;
-        tabla3.appendChild(tr3);
+        tabla3.appendChild(tr);
 
     });
 }
